@@ -8,8 +8,8 @@ const int In2 = 12;
 const int In3 = 11;
 const int In4 = 10;
 
-
 void setup(){
+ //set up and calibrate sensors 
  qtr.setTypeRC();
  qtr.setSensorPins((const uint8_t[]){2, 3, 4, 5}, SensorCount);
  for (uint16_t i = 0; i < 400; i++){
@@ -24,6 +24,8 @@ void setup(){
 }
 
 void loop(){
+ qtr.readLineBlack(sensorValues);
+ 
  if(sensorValues[0] < 350){
  //turn right
  digitalWrite(In1, HIGH);
@@ -44,10 +46,11 @@ void loop(){
  digitalWrite(In4, LOW); 
  }
 
-digitalArray();
+displaySensors();
 }
 
-void digitalArray(){
+void displaySensors(){
+ //print sensor values
  uint16_t position = qtr.readLineBlack(sensorValues);
  Serial.print("Sensors: ");
  for (uint8_t i = 0; i < SensorCount; i++){
